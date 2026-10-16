@@ -1,0 +1,7 @@
+node_modules/
+.wt-verify/
+*.tgz
+
+.verification/
+.browser-evidence/
+handoff-manifest.json

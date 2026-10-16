@@ -1,0 +1,59 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      dsh-claude-parchment:
+        specifier: file:./packages/dsh-claude-parchment
+        version: link:packages/dsh-claude-parchment
+      dsh-loom:
+        specifier: file:./packages/dsh-loom
+        version: link:packages/dsh-loom
+      dsh-strata:
+        specifier: file:./packages/dsh-strata
+        version: link:packages/dsh-strata
+      dsh-warden:
+        specifier: file:./packages/dsh-warden
+        version: file:packages/dsh-warden
+      laurel:
+        specifier: file:./packages/laurel
+        version: link:packages/laurel
+
+packages:
+
+  dsh-claude-parchment@file:packages/dsh-claude-parchment:
+    resolution: {directory: packages/dsh-claude-parchment, type: directory}
+    engines: {node: '>=22.19'}
+
+  dsh-loom@file:packages/dsh-loom:
+    resolution: {directory: packages/dsh-loom, type: directory}
+    engines: {node: ^22.19.0 || >=24.0.0}
+
+  dsh-strata@file:packages/dsh-strata:
+    resolution: {directory: packages/dsh-strata, type: directory}
+    engines: {node: ^22.19.0 || >=24.0.0}
+
+  dsh-warden@file:packages/dsh-warden:
+    resolution: {directory: packages/dsh-warden, type: directory}
+    engines: {node: ^22.19.0 || >=24.0.0}
+
+  laurel@file:packages/laurel:
+    resolution: {directory: packages/laurel, type: directory}
+    engines: {node: ^22.19.0 || >=24.0.0}
+
+snapshots:
+
+  dsh-claude-parchment@file:packages/dsh-claude-parchment: {}
+
+  dsh-loom@file:packages/dsh-loom: {}
+
+  dsh-strata@file:packages/dsh-strata: {}
+
+  dsh-warden@file:packages/dsh-warden: {}
+
+  laurel@file:packages/laurel: {}

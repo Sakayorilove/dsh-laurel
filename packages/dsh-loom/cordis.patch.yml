@@ -1,0 +1,8 @@
+# dsh-loom 的 bundle patch。
+#
+# 只做一件事：把本插件的宿主半边插进 loader 树。
+# `name: dsh-loom` 会被解析成本包的 `main`（lib/index.js）——
+# 与 package.json 的 `main`、客户端 bundle 的 `id` 三处必须一致。
+- insert:
+    - id: loom
+      name: dsh-loom

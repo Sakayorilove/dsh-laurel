@@ -1,0 +1,83 @@
+# laurel-center —— 装载机挂进 DSH profile 的那一层。
+#
+# 这个文件是整个装载机的「总闸」。它插 **6 行**进 loader 树：
+#
+#   1 laurel-center              装载机自己（宿主半边 + 总控台 UI）
+#   2..6 五个子插件                Laurel 通知 / 羊皮纸 / 跨会话记忆 / 内耗护栏 / Loom
+#
+# ── 为什么六条都写在这里，而不是运行时动态插 ────────────────────────────
+# DSH 的客户端模块系统（@deepseek-ai/dsh-client-modules）只认「loader 树里
+# 真实存在的行」：它扫描 ctx.loader.entries()，遇到声明了 dsh.client 的包才
+# 会为它产出 boot graph row，浏览器那边才拿得到 client bundle。
+#
+# 所以六条都静态声明在这里 —— 行的**存在**是恒定的，开关走的是 `disabled`：
+#   · 开 = 那行 disabled:false（或没有这个字段）→ 宿主半边跑 + 前端 bundle 进 boot graph
+#   · 关 = 那行 disabled:true → 宿主半边停 + 前端 bundle 不进 boot graph
+# 这是 DSH 自己的插件开关语义（`entry.disabled` 的行被扫描时直接跳过），
+# 我们只是把五条开关聚到一块 UI 上。
+#
+# ── name 为什么是纯包名 ──────────────────────────────────────────────────
+# DSH 的 client-modules 用 `resolveMeta(loaderName, baseUrl)` 找包：
+#   - 带斜杠但不是 scope 包（`laurel-center/packages/laurel`）→ 既不是合法包名、
+#     也不是 path-like（不以 `.`/`file:`/绝对路径开头）→ **直接返回 null**，
+#     该行不产出 boot graph row，前端永远加载不到。
+#   - 纯包名（`laurel`）→ 走 Node 解析，从 profile 目录找 `node_modules/laurel`。
+#
+# 所以子插件行的 name 必须是纯包名，五个子包各自在 profile 的 node_modules 里
+# 有一个链接，指向**本包内的** `packages/<dir>`（见 README 的安装步骤）。
+# 源码实体只有一个：`Laurel-Center/packages/<dir>/`，profile 里只是链接。
+#
+# 这样每个子包各拿到一条**独立**的 boot graph row（各自 packageName 不同），
+# 互不干扰。删掉 Laurel-Center 之外的任何目录，装载机照跑。
+#
+# ── 单独开关怎么落地 ────────────────────────────────────────────────────
+# 每行都有稳定的 id（`laurel` / `claude-parchment` / `strata` / `warden` / `loom`）。
+# 总控台（Settings → Laurel 套件）里的开关、以及「一键全部打开 / 全部关闭」，
+# 都通过宿主原生 pluginManager.setPluginEnabled() 落地 —— 它写的是 **profile 的
+# cordis.patch.yml（用户层，优先级最高）**，再由宿主自己的 reload/HMR 流程应用。
+# 基础 cordis.yml 不因开关而改写，也不会出现重复行。
+#
+# 手工关某一个，也是在 profile 自己的 cordis.patch.yml（用户层）里写：
+#
+#     - id: laurel
+#       disabled: true
+#
+# 用户层里显式写的决定优先于一切；Center 不会在开机时把它改回去。
+#
+# ── 默认值 ──────────────────────────────────────────────────────────────
+# 五行都带 `disabled: true`：默认全关，由总控台的开关打开。
+# 首次加载时没有任何 profile patch 覆盖，所以就是「五个全关」。
+# 旧版本把默认开关写在下面那行的 config.enabled 里并另存 state.json；
+# 新版不再需要 —— 唯一真相是 profile 的用户层，state.json 只作一次性迁移输入。
+- insert:
+    # ─────────────────────────────────────────────── 装载机自己
+    - id: laurel-center
+      name: ./lib/index.js
+      config:
+        logLevel: info
+
+    # ─────────────────────────────────────────────── 子插件 1：通知
+    - id: laurel
+      name: laurel
+      disabled: true
+      # 子插件的配置还是它自己那份（照搬默认值，语义不变）。
+
+    # ─────────────────────────────────────────────── 子插件 2：羊皮纸主题
+    - id: claude-parchment
+      name: dsh-claude-parchment
+      disabled: true
+
+    # ─────────────────────────────────────────────── 子插件 3：跨会话记忆
+    - id: strata
+      name: dsh-strata
+      disabled: true
+
+    # ─────────────────────────────────────────────── 子插件 4：内耗护栏
+    - id: warden
+      name: dsh-warden
+      disabled: true
+
+    # ─────────────────────────────────────────────── 子插件 5：Loom 工作台
+    - id: loom
+      name: dsh-loom
+      disabled: true

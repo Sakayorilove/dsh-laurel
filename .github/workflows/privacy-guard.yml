@@ -1,0 +1,38 @@
+name: privacy-guard
+
+# 隐私阀门：任何来源的 push/PR 都会被检查，防的是「本地忘了跑钩子 / --no-verify 绕过」。
+# 检查内容：本机用户名与绝对路径、密钥、私钥、邮箱、内网 IP/域名、手机号、身份证。
+# 本机身份规则（~/.privacy-guard/local.rules.json）默认不在 CI 上，可用仓库 secret
+# PRIVACY_GUARD_LOCAL_RULES 注入（内容 = 该文件全文），不配就只跑通用规则。
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  privacy-gate:
+    name: 隐私闸门（用户名/路径/密钥）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 历史扫描需要完整历史
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: 载入本机私有规则（可选 secret）
+        env:
+          PG_LOCAL: ${{ secrets.PRIVACY_GUARD_LOCAL_RULES }}
+        run: |
+          if [ -n "$PG_LOCAL" ]; then
+            mkdir -p "$HOME/.privacy-guard"
+            printf '%s' "$PG_LOCAL" > "$HOME/.privacy-guard/local.rules.json"
+            echo "已载入 local.rules.json（含本机身份规则）"
+          else
+            echo "未配置 PRIVACY_GUARD_LOCAL_RULES：本次只跑通用规则（密钥/路径/邮箱/内网 IP 等）"
+          fi
+      - name: 工作树扫描
+        run: node .github/privacy-guard/privacy-guard.mjs scan --all --repo . --fail-on high
+      - name: 历史扫描（新增行）
+        run: node .github/privacy-guard/privacy-guard.mjs history --repo . --fail-on high

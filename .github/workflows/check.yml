@@ -1,0 +1,129 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # 需要**真实 DSH 宿主**的集成测试跑不了 GitHub 托管 runner（那上面没装 Harness），
+  # 所以单独留一个手动入口：在装了 Harness 的自托管 runner 上跑。
+  # 平时（push / PR）这个 job 不执行，也不会被算作「跳过通过」——见 job 内的说明。
+  workflow_dispatch:
+    inputs:
+      host_integration:
+        description: 跑需要真实 DSH 宿主的集成测试（需要一台装了 Harness 的自托管 runner）
+        type: boolean
+        default: false
+
+jobs:
+  # ── 1. 离线门禁：不装任何依赖，克隆下来就能跑 ──────────────────────────
+  offline-gates:
+    name: 离线门禁（不需要装依赖）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # 这一条现在含「全仓每个 JS/MJS/CJS 都能被解析」——2026-10-13 的一次事故
+      # （主题测试文件把真实换行写进单引号字符串）就是被它挡住的。
+      - name: 装载机离线自检（含全仓 JS 语法）
+        run: node scripts/check.mjs
+      - name: 集成探针（patch 组出 loader 树、开关语义）
+        run: node scripts/integration-probe.mjs
+      - name: boot graph 探针（bundle id、inject 值域）
+        run: node scripts/bootgraph-probe.mjs
+      - name: 模块落点一致（装载机 + 四个模块）
+        run: node scripts/module.mjs check
+      - name: 客户端产物与源码一致
+        run: node scripts/build-client.mjs --check
+
+  # ── 2. 安装事务：用真实 pnpm 在隔离 profile 上跑完整流程 ────────────────
+  # 默认命令不能用、旧结构迁移/卸载失败、失败回滚时先崩：
+  # 都不是「读代码能看出来」的问题，只有真的跑一次 pnpm 才暴露。
+  install-transaction:
+    name: 安装事务（真实 pnpm，隔离 profile）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '12'
+      - name: 九个场景：全新安装 / 旧结构迁移 / 卸载×2 / 显式回滚 / 失败回滚×2 / 参数解析 / 默认寻址
+        run: node scripts/install-probe.mjs
+
+  # ── 3. 四个模块自己的测试 ───────────────────────────────────────────────
+  module-tests:
+    name: 模块测试（四个包）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '12'
+      - name: 装工作区依赖（lockfile 已提交，用 frozen）
+        run: pnpm install --frozen-lockfile
+
+      - name: 通知（packages/laurel）
+        working-directory: packages/laurel
+        run: npm test
+
+      - name: 记忆与上下文（packages/dsh-strata）
+        working-directory: packages/dsh-strata
+        run: npm test
+
+      # 主题的 10 个用例要真实 Chromium。缺浏览器时**不要**用跳过冒充通过：
+      # playwright 装不上就让这一步红。
+      - name: Claude 主题 · 装 Chromium
+        working-directory: packages/dsh-claude-parchment
+        run: npx playwright install --with-deps chromium
+      - name: Claude 主题 · 单元 + 浏览器用例
+        working-directory: packages/dsh-claude-parchment
+        run: npm test
+
+      # Loom 的 `npm test` 会 tsc 编译 + 跑全部测试文件。托管 runner 上没有 DSH 宿主，
+      # 所以宿主集成用例会 skip —— 这一步仍然退出 0，但结论是 partial（不是 pass）。
+      - name: Loom · 可复现单元测试 + 宿主集成用例如实报 skip
+        working-directory: packages/dsh-loom
+        run: npm test
+      - name: Loom · 报告必须如实（不许有崩掉的文件，不许静默全跳过）
+        working-directory: packages/dsh-loom
+        run: node scripts/check-test-report.mjs
+
+  # ── 4. 宿主集成测试（手动触发）─────────────────────────────────────────
+  # 明确单列，不混进上面三个 job：
+  #   · 它需要一台**装了 DSH（DeepSeek Harness）**的机器，托管 runner 不满足；
+  #   · `--require-host` 让「没有宿主」直接算失败，而不是安静地 skip 掉。
+  # 跑之前先在仓库变量里设 `LOOM_HOST_ANCHOR`（Harness 的 package.json 或安装目录）。
+  host-integration:
+    name: 宿主集成测试（手动触发；需要自托管 runner + DSH）
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.host_integration }}
+    runs-on: [self-hosted, dsh-host]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '12'
+      - name: 装工作区依赖
+        run: pnpm install --frozen-lockfile
+      - name: 自检宿主锚点（找不到就直接红，并打印怎么准备）
+        working-directory: packages/dsh-loom
+        env:
+          LOOM_HOST_ANCHOR: ${{ vars.LOOM_HOST_ANCHOR }}
+        run: node scripts/host-anchor.mjs
+      - name: Loom 宿主集成 + 浏览器用例（--require-host）
+        working-directory: packages/dsh-loom
+        env:
+          LOOM_HOST_ANCHOR: ${{ vars.LOOM_HOST_ANCHOR }}
+        run: npm run test:all -- --require-host
+      - name: Loom · 报告必须如实
+        working-directory: packages/dsh-loom
+        run: node scripts/check-test-report.mjs

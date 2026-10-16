@@ -1,0 +1,8 @@
+# 统一换行：这个包要能被 Windows / macOS / Linux 上的人直接 clone 下来跑
+* text=auto eol=lf
+
+# 二进制（以后加音效、图标时用得上）
+*.wav binary
+*.mp3 binary
+*.png binary
+*.ico binary

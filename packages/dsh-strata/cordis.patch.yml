@@ -1,0 +1,29 @@
+# 默认值；设置页持久化配置覆盖这里。更新宿主代码后需完全重启 Harness。
+- insert:
+    - id: strata
+      name: ./lib/index.js
+      config:
+        enabled: true
+        injectSection: true
+        readScope: workspace
+        readGlobal: true
+        searchHistory: true
+        defaultScope: workspace
+        allowGlobalWrite: false
+        crossWorkspace: ask
+        recallLimit: 6
+        maxInjectChars: 1600
+        writePrompt: conservative
+        maxForeignWorkspaces: 3
+        historySessions: 30
+        historyMaxChars: 60000
+        minScore: 0.12
+        associationHops: 1
+        associationDecay: 0.35
+        halfLifeDays: 45
+        perSessionQuota: 2
+        maxRecords: 5000
+        backfillSessions: 50
+        maxSessionBytes: 25165824
+        extraSessionRoots: []
+        logLevel: info

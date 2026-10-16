@@ -1,0 +1,11 @@
+node_modules/
+release/
+release.bak-*/
+*.bak-*/
+*.tgz
+
+# release 生成物：`scripts/release.mjs` 除了往安装面写，还会在**仓库根**留一份清单
+# （SOURCES.md 说它「不入库」）。漏掉这一条会让生成过一次之后 `git status` 一直不干净，
+# 而清单里的 `source.dirty` 正是读 `git status --porcelain` 得出的 ——
+# 于是「从干净树生成的产物」被记成 dirty（实测：第二次生成时 dirty 由 false 变 true）。
+release.manifest.json

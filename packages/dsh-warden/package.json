@@ -1,0 +1,59 @@
+{
+  "name": "dsh-warden",
+  "version": "0.2.0",
+  "description": "给 DSH 的 agent 装一副「缰绳」：把子代理的等待上限、互相串扰、反复返工、大输出直冲上下文、共享资源互踩、验收无法归属这几类内耗，收成一套可开关、可核对生效程度的插件级护栏。内置三档预设（温和/均衡/严格），也可逐项自定义。历史压缩仍由官方 dsh-compaction-basic 独占。",
+  "license": "MIT",
+  "author": "Clelia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sakayorilove/dsh-laurel.git",
+    "directory": "packages/dsh-warden"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "使用说明.md",
+    "设计说明.md",
+    "系统层问题与提示词.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "agent",
+    "guard",
+    "subagent",
+    "context",
+    "hygiene"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "scripts": {
+    "test": "node tests/smoke.mjs && node tests/host-contract.mjs",
+    "test:unit": "node tests/smoke.mjs",
+    "test:host": "node tests/host-contract.mjs",
+    "build": "node scripts/build-client.mjs --entry lib/client/index.mjs --out lib/client.js --id dsh-warden --strip-comments",
+    "build:check": "node scripts/build-client.mjs --entry lib/client/index.mjs --out lib/client.js --id dsh-warden --strip-comments --check"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-session"
+      ]
+    }
+  }
+}

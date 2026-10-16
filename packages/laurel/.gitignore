@@ -1,0 +1,13 @@
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# 本地跑测试时可能落下来的东西
+*.log
+.codegraph/
+.DS_Store
+Thumbs.db
+
+# 迁移快照（含整树副本与 profile 改前备份），仅本机存档，不入库
+.migration-backup/

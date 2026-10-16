@@ -1,0 +1,9 @@
+# Laurel 套件 · 单一开发仓库
+#
+# 这里放的是**完整开发输入**：laurel-center 本体 + 四个子包的源码
+# （含 Loom 的 src/tsconfig/scripts/tests —— 那些是重新构建与测试所必需的）。
+#
+# 运行产物（安装面）由 `node scripts/release.mjs --to <目标目录>` 生成，
+# 只包含运行需要的文件；不要直接手改安装目录里的文件。
+packages:
+  - 'packages/*'

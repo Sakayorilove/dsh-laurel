@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>羊皮纸与交易主题 · DeepSeek harness 主题预览</title>
+  <link rel="stylesheet" href="/preview/preview.css">
+  <script src="/node_modules/react/umd/react.development.js"></script>
+  <script src="/node_modules/react-dom/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <svg class="icons" aria-hidden="true"><defs>
+    <symbol id="new" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="chat" viewBox="0 0 24 24"><path d="M4 5h16v12H9l-5 3V5Z"/></symbol>
+    <symbol id="folder" viewBox="0 0 24 24"><path d="M3 6h7l2 3h9v11H3V6Z"/></symbol>
+    <symbol id="settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M9 4v6M15 14v6"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M12 19V5m-5 5 5-5 5 5"/></symbol>
+    <symbol id="chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+    <symbol id="menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></symbol>
+    <symbol id="retry" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></symbol>
+  </defs></svg>
+  <div class="preview-controls">
+    <span>主题预览 <small>示例内容</small></span>
+    <div><button id="light" type="button">日间</button><button id="dark" type="button">夜间</button><button id="open-settings" type="button">插件设置</button></div>
+  </div>
+  <div class="pI_x6G_frame">
+    <div class="fixture_sidebarCol"><aside class="hHd-Xa_root">
+      <button class="mobile-sidebar-close" aria-label="收起侧栏">收起</button>
+      <div class="brand">DeepSeek <span>harness</span></div>
+      <button class="new-chat"><svg><use href="#new"/></svg>新建对话</button>
+      <nav aria-label="主导航"><button class="nav selected"><svg><use href="#chat"/></svg>对话</button><button class="nav"><svg><use href="#folder"/></svg>工作区</button></nav>
+      <div class="sidebar-group">最近</div>
+      <button class="YDXeBa_sessionRow YDXeBa_selected">把思路写成方案</button>
+      <button class="YDXeBa_sessionRow">为阅读留一点空间</button>
+      <button class="YDXeBa_sessionRow">整理项目的下一步</button>
+      <div class="sidebar-group">工作区</div>
+      <button class="nav"><svg><use href="#folder"/></svg>示例工作区</button>
+      <button class="nav sidebar-settings"><svg><use href="#settings"/></svg>设置</button>
+      <div class="profile"><span class="avatar">Y</span><div>我的工作台<small>本地主题预览</small></div></div>
+    </aside></div>
+    <main class="wSkVaW_root">
+      <header class="wSkVaW_header"><button class="mobile-menu" aria-label="展开侧栏"><svg><use href="#menu"/></svg></button><span>把思路写成方案</span><button class="model">DeepSeek <svg><use href="#chevron"/></svg></button></header>
+      <section class="transcript" data-conversation-content data-content-phase="active">
+        <div data-conversation-scroll>
+          <div class="fixture-chat-scroll"><div class="fixture-column">
+            <div data-chat-flow-kind="user"><div class="Sixlwa_userRow"><div class="Sixlwa_userStack"><div class="Sixlwa_bubble">请帮我把主题设计的思路，整理成一个清晰的实施方案。</div></div></div></div>
+            <article data-chat-flow-kind="assistant-step" data-chat-group-part="response">
+              <div class="fixture-answer"><div class="fixture-answer-body"><div class="fixture_markdown">
+                <h1>让思路清晰，操作直接</h1><p>从一段想法到可以执行的方案，先理清目标，再安排步骤。界面保持安静，把注意力留给眼前的工作。</p><h2>日间与夜间，共用一套秩序</h2><p>浅色适合明亮环境，深色适合夜间专注。两种模式保留同样的间距和层级，让切换自然发生。</p><ul><li><strong>层次：</strong>主画布、侧栏和输入区清楚分开。</li><li><strong>文字：</strong>正文易读，代码保留等宽字体。</li><li><strong>操作：</strong>强调色标出发送、选中和键盘焦点。</li></ul><div class="example-code md-code-block"><div data-code-block-banner>主题切换</div><pre><code><span class="comment">// 跟随 harness 的外观偏好</span>
+<span class="keyword">const</span> mode = <span class="string">'system'</span>;</code></pre></div><p>主题只改变外观；项目、工具和对话保持原有的工作方式。</p>
+              </div></div></div>
+              <div class="answer-actions"><button aria-label="复制回答"><svg><use href="#copy"/></svg></button><button aria-label="重新生成回答"><svg><use href="#retry"/></svg></button></div>
+            </article>
+            <div data-chat-flow-kind="user"><div class="Sixlwa_userRow"><div class="Sixlwa_userStack"><div class="Sixlwa_bubble">夜间也沿用这套排版吗？</div></div></div></div>
+            <article data-chat-flow-kind="assistant-step" data-chat-group-part="response"><div class="fixture-answer"><div class="fixture-answer-body"><div class="fixture_markdown"><p>是的。宽度、段落和标题位置保持一致；你也可以随时调整字号和对话宽度。</p></div></div></div></article>
+          </div></div>
+          <div class="composer-seat" data-composer-seat><div data-composer-card><div data-composer-input contenteditable="true" role="textbox" aria-label="消息输入" data-composer-placeholder>继续这段思路…</div><div class="composer-actions"><button aria-label="添加附件"><svg><use href="#new"/></svg></button><button class="thinking">深度思考 <svg><use href="#chevron"/></svg></button><button class="uV2eYG_primary" aria-label="发送"><svg><use href="#arrow"/></svg></button></div></div><p class="composer-note">独立主题预览 · 示例内容</p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <dialog id="settings-dialog" aria-label="主题插件设置"><div class="dialog-head"><span>主题插件设置</span><button id="close-settings" aria-label="关闭设置">关闭</button></div><div id="settings-root"></div></dialog>
+  <script src="/preview/host-fixture.js"></script>
+  <script src="/lib/client.js"></script>
+</body>
+</html>

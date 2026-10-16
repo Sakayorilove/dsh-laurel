@@ -1,0 +1,50 @@
+{
+  "name": "laurel",
+  "version": "0.1.0",
+  "description": "给 DSH 补上系统通知：agent 有问题要问你、要你批准、或者干完了，弹一条 Windows 通知并响一声 —— 不看窗口也不会错过。",
+  "license": "MIT",
+  "author": "Clelia",
+  "repository": { "type": "git", "url": "https://github.com/Sakayorilove/dsh-laurel.git", "directory": "packages/laurel" },
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "library",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "notification",
+    "toast"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "scripts": {
+    "test": "node tests/smoke-plugin.mjs && node tests/kit-client.mjs",
+    "test:host": "node tests/smoke-plugin.mjs",
+    "test:kit": "node tests/kit-client.mjs",
+    "build:client": "node scripts/build-client.mjs --entry lib/client/index.mjs --out library/laurel-sample/client.js --id laurel-sample",
+    "new:plugin": "node scripts/create-plugin.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "slots",
+        "uiSession"
+      ]
+    }
+  }
+}

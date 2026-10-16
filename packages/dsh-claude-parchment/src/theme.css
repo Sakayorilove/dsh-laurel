@@ -1,0 +1,274 @@
+/* Every override below is gated by our own attribute; removing the layer restores host appearance. */
+html[data-cp-active] body {
+  color: var(--cp-text);
+  background: var(--cp-canvas);
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --dsw-font-family-brand: Georgia, "Noto Serif SC", "Songti SC", SimSun, serif;
+  --dsw-menu-backdrop-filter: none;
+  --dsw-radius-panel: 14px;
+  --dsw-radius-md: 8px;
+  --dsw-radius-sm: 6px;
+  --dsw-shadow-lv1: 0 2px 6px rgb(40 28 15 / 5%);
+  --dsw-shadow-lv2: 0 6px 18px rgb(40 28 15 / 9%);
+  --cp-font-reading: Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", SimSun, serif;
+  --cp-font-ui: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  --cp-prose-leading: 1.8;
+  --cp-paragraph-gap: 1em;
+  --cp-turn-gap: 28px;
+}
+html[data-cp-active] body[data-ds-dark-theme] { --cp-prose-leading: 1.85; }
+html[data-cp-active] ::selection { background: var(--cp-selection); color: var(--cp-text); }
+html[data-cp-active] :is(input, textarea, [contenteditable="true"]) { caret-color: var(--cp-accent); }
+html[data-cp-active] :is(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: var(--cp-accent);
+  outline-offset: 3px;
+}
+html[data-cp-active] :is(pre, code, kbd, samp) {
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+/* This stylesheet only targets host structure. It never adapts to, nor reads from,
+   any other installed plugin: no third-party class names or attributes are referenced. */
+html[data-cp-active] [data-composer-card] {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-strongBorder);
+  border-radius: 14px;
+  box-shadow: none;
+}
+html[data-cp-active] [data-composer-card]:focus-within {
+  border-color: var(--cp-accent);
+  box-shadow: 0 0 0 1px var(--cp-accent);
+}
+html[data-cp-active] [data-composer-input] {
+  font-family: inherit;
+  color: var(--cp-text);
+  line-height: 1.7;
+}
+html[data-cp-active] [data-composer-placeholder] { color: var(--cp-muted); }
+/* One shared width axis keeps the transcript, composer and host width handles aligned.
+   An explicit user-dragged width still wins over our 720px default. */
+html[data-cp-active] [data-conversation-content] {
+  --dsh-chat-content-width: min(var(--dsh-chat-user-width, 720px), max(160px, calc(var(--dsh-conversation-column-width, 840px) - 64px)));
+  --dsh-composer-card-max-width: calc(var(--dsh-chat-content-width) + 32px);
+}
+html[data-cp-active] :is([data-chat-flow-kind="user"], [data-chat-flow-kind="steering"], [data-chat-group-part="response"]) {
+  --dsh-chat-flow-gap: var(--cp-turn-gap);
+}
+html[data-cp-active] :is([data-chat-flow-kind="user"], [data-chat-flow-kind="steering"]) + [data-chat-flow-kind]:not([hidden]) {
+  --dsh-chat-flow-gap: var(--cp-turn-gap);
+}
+/* Module-class suffixes mirror MessageItem's userStack/bubble without pinning its hash. */
+html[data-cp-active] :is([data-chat-flow-kind="user"], [data-chat-flow-kind="steering"]) [class*="_userStack"] {
+  max-width: 88%;
+}
+html[data-cp-active] :is([data-chat-flow-kind="user"], [data-chat-flow-kind="steering"]) [class*="_bubble"] {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--cp-user);
+  color: var(--cp-text);
+  font-family: var(--cp-font-ui);
+  font-size: var(--dsh-content-font-size, 16px);
+  line-height: 1.65;
+}
+/* Markdown uses explicit font shorthands, so inheriting a font on the flow seat
+   does not style real answers. Override the prose roles locally, leaving compact
+   reasoning, tools, code and controls in their native reading/operation roles. */
+html[data-cp-active] :is([data-chat-flow-kind="assistant"], [data-chat-flow-kind="assistant-step"]):not([data-chat-group-part="reasoning"]) {
+  --dsw-font-markdown-base: 400 var(--dsh-content-font-size, 16px)/var(--cp-prose-leading) var(--cp-font-reading);
+  --dsw-font-markdown-base-strong: 600 var(--dsh-content-font-size, 16px)/var(--cp-prose-leading) var(--cp-font-reading);
+  --dsw-font-markdown-h1: 600 calc(var(--dsh-content-font-size, 16px) * 1.5)/1.35 var(--cp-font-reading);
+  --dsw-font-markdown-h2: 600 calc(var(--dsh-content-font-size, 16px) * 1.25)/1.4 var(--cp-font-reading);
+  --dsw-font-markdown-h3: 600 calc(var(--dsh-content-font-size, 16px) * 1.125)/1.45 var(--cp-font-reading);
+  --dsw-font-markdown-h4: 600 var(--dsh-content-font-size, 16px)/1.5 var(--cp-font-reading);
+}
+html[data-cp-active] :is([data-chat-flow-kind="assistant"], [data-chat-flow-kind="assistant-step"]):not([data-chat-group-part="reasoning"]) [class*="_markdown"]:not([data-markdown-variant="compact"]) {
+  font: var(--dsw-font-markdown-base);
+  color: var(--cp-text);
+  overflow-wrap: anywhere;
+}
+html[data-cp-active] :is([data-chat-flow-kind="assistant"], [data-chat-flow-kind="assistant-step"]):not([data-chat-group-part="reasoning"]) [class*="_markdown"]:not([data-markdown-variant="compact"]) :is(p, ul, ol) {
+  margin-block: var(--cp-paragraph-gap);
+}
+html[data-cp-active] :is([data-chat-flow-kind="assistant"], [data-chat-flow-kind="assistant-step"]):not([data-chat-group-part="reasoning"]) [class*="_markdown"]:not([data-markdown-variant="compact"]) :is(h1, h2, h3, h4, h5, h6) {
+  margin-block: 1.5em .6em;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+html[data-cp-active] [data-chat-flow-kind] :is(button, input, select, [data-disclosure-row], [data-code-block-banner]) {
+  font-family: var(--cp-font-ui);
+}
+html[data-cp-active] [data-chat-flow-kind] [data-markdown-variant="compact"] { font-family: var(--cp-font-ui); }
+html[data-cp-active] [data-chat-flow-kind] .md-table-wide {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+/* Host module classes that render the welcome headline, page header and primary buttons. */
+html[data-cp-active] :is(.pXSMma_headline, .pXSMma_titleText) {
+  font-family: var(--dsw-font-family-brand);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+html[data-cp-active] .pXSMma_headline { font-size: 34px; }
+html[data-cp-active] .wSkVaW_header { border-bottom-color: var(--cp-border); }
+html[data-cp-active] .uV2eYG_primary {
+  background: var(--cp-accent);
+  color: var(--cp-onAccent);
+}
+html[data-cp-active] .uV2eYG_primary:hover:not(:disabled) { background: var(--cp-accentHover); }
+html[data-cp-active] .YDXeBa_sessionRow.YDXeBa_selected { background: var(--cp-selected); }
+html[data-cp-active] .YDXeBa_sessionRow:hover { background: var(--cp-hover); }
+html[data-cp-active] [data-chat-flow-kind] a { color: var(--cp-link); text-underline-offset: 0.2em; }
+/* Trading variants: one accent, quiet surfaces, local light only on meaningful interaction. */
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) body {
+  --cp-font-reading: var(--cp-font-ui);
+  --dsw-font-family-brand: var(--cp-font-ui);
+  --cp-prose-leading: 1.75;
+  --dsw-radius-panel: var(--cp-panel-radius);
+  --dsw-radius-xs: var(--cp-control-radius);
+  --dsw-radius-sm: var(--cp-control-radius);
+  --dsw-radius-md: var(--cp-control-radius);
+  --dsw-radius-lg: var(--cp-panel-radius);
+  --dsw-radius-xl: var(--cp-panel-radius);
+  --cp-glow: color-mix(in srgb, var(--cp-accent) 16%, transparent);
+  --cp-shadow-ink: rgb(12 22 29 / 12%);
+  --cp-sidebar-shadow: 5px 0 18px rgb(12 22 29 / 13%);
+  --dsw-shadow-lv1: 0 3px 10px rgb(0 0 0 / 10%);
+  --dsw-shadow-lv2: 0 8px 24px rgb(0 0 0 / 16%);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) body[data-ds-dark-theme] {
+  --cp-shadow-ink: rgb(0 0 0 / 32%);
+  --cp-sidebar-shadow: 6px 0 20px rgb(0 0 0 / 34%);
+}
+/* Shape is part of each theme's identity, not just a shared recolored shell. */
+html[data-cp-active][data-cp-theme="robinhood"] body {
+  --cp-panel-radius: 0px;
+  --cp-control-radius: 0px;
+  --cp-nav-radius: 0px;
+  --cp-bubble-radius: 0px;
+  --cp-sidebar-radius: 0px;
+  --cp-bubble-shadow: 0 2px 7px var(--cp-shadow-ink);
+}
+html[data-cp-active][data-cp-theme="binance"] body {
+  --cp-panel-radius: 4px;
+  --cp-control-radius: 4px;
+  --cp-nav-radius: 3px;
+  --cp-bubble-radius: 4px;
+  --cp-sidebar-radius: 4px;
+  --cp-bubble-shadow: 0 3px 10px var(--cp-shadow-ink);
+}
+html[data-cp-active][data-cp-theme="bitget"] body {
+  --cp-panel-radius: 12px;
+  --cp-control-radius: 6px;
+  --cp-nav-radius: 8px;
+  --cp-bubble-radius: 12px 12px 3px 12px;
+  --cp-sidebar-radius: 12px;
+  --cp-bubble-shadow: 0 5px 16px var(--cp-shadow-ink);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) :is(.pXSMma_headline, .pXSMma_titleText) {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) [data-composer-card] {
+  border-radius: var(--cp-panel-radius);
+  transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) [data-composer-card]:focus-within {
+  box-shadow: 0 0 0 1px var(--cp-accent), 0 4px 18px var(--cp-glow);
+}
+/* The surrounding card supplies the visible focus indicator for the editable area. */
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) [data-composer-input]:focus-visible {
+  outline: none;
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) .uV2eYG_primary {
+  border-radius: var(--cp-control-radius);
+  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) .uV2eYG_primary:hover:not(:disabled) {
+  box-shadow: 0 3px 12px var(--cp-glow);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) .YDXeBa_sessionRow.YDXeBa_selected {
+  box-shadow: inset 2px 0 var(--cp-accent);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) .YDXeBa_sessionRow {
+  border-radius: var(--cp-nav-radius);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) :is([data-chat-flow-kind="user"], [data-chat-flow-kind="steering"]) [class*="_bubble"] {
+  border-radius: var(--cp-bubble-radius);
+  box-shadow: var(--cp-bubble-shadow);
+}
+/* AppFrame's sidebar column clips its children during collapse. Paint depth on
+   the column itself, so its own shadow can reach the conversation without
+   changing overflow, widths, resize handles or collapse geometry. */
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) :is([class*="_sidebarCol"], .hHd-Xa_root) {
+  border-radius: 0 var(--cp-sidebar-radius) var(--cp-sidebar-radius) 0;
+  box-shadow: var(--cp-sidebar-shadow);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) [class*="_sidebarCol"] .hHd-Xa_root {
+  box-shadow: none;
+}
+@media (min-width: 601px) {
+  html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) [class*="_sidebarCol"] { z-index: 1; }
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) :is([data-code-block-banner], .md-code-block) {
+  border-radius: var(--cp-control-radius);
+}
+html[data-cp-active][data-cp-theme]:not([data-cp-theme="parchment"]) [data-cp-settings] :is(button, input[type="text"]) {
+  border-radius: var(--cp-control-radius);
+}
+/* The plugin's own settings stay readable in every state, including theme off. */
+[data-cp-settings] { color: var(--dsw-alias-label-primary); padding: 24px; max-width: 760px; box-sizing: border-box; }
+[data-cp-settings] h2 { font-size: 22px; margin: 0 0 10px; font-weight: 600; }
+[data-cp-settings] p { color: var(--dsw-alias-label-secondary); line-height: 1.7; margin: 0 0 20px; }
+[data-cp-settings] .cp-toggle { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 0; border-block: 1px solid var(--dsw-alias-border-l1); }
+[data-cp-settings] input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--dsw-alias-brand-primary); flex-shrink: 0; }
+[data-cp-settings] .cp-status { margin: 18px 0; }
+[data-cp-settings] .cp-themes { min-width: 0; margin: 24px 0 20px; padding: 0; border: 0; }
+[data-cp-settings] .cp-themes legend { padding: 0 0 12px; font-weight: 600; }
+[data-cp-settings] .cp-theme-option { display: flex; align-items: center; gap: 12px; min-height: 72px; padding: 10px 4px; border-top: 1px solid var(--dsw-alias-border-l1); cursor: pointer; box-sizing: border-box; }
+[data-cp-settings] .cp-theme-option:hover { background: var(--dsw-alias-interactive-bg-hover); }
+[data-cp-settings] .cp-theme-option[data-selected] .cp-theme-name { color: var(--dsw-alias-brand-primary); }
+[data-cp-settings] .cp-theme-option input { width: 18px; height: 18px; margin: 0; flex-shrink: 0; accent-color: var(--dsw-alias-brand-primary); }
+[data-cp-settings] .cp-theme-option input:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 3px; }
+[data-cp-settings] .cp-theme-copy { display: grid; gap: 4px; min-width: 0; }
+[data-cp-settings] .cp-theme-name { font-weight: 600; overflow-wrap: anywhere; }
+[data-cp-settings] .cp-theme-detail { color: var(--dsw-alias-label-secondary); font-size: 13px; line-height: 1.5; }
+[data-cp-settings] .cp-theme-colors { display: flex; margin-left: auto; padding-left: 8px; flex-shrink: 0; }
+[data-cp-settings] .cp-theme-colors span { width: 14px; height: 20px; }
+[data-cp-settings] .cp-theme-colors span:first-child { border-radius: 4px 0 0 4px; }
+[data-cp-settings] .cp-theme-colors span:last-child { border-radius: 0 4px 4px 0; }
+[data-cp-settings] .cp-themes .cp-theme-help { font-size: 13px; margin: 12px 0 0; }
+[data-cp-settings] .cp-help { padding: 16px; background: var(--dsw-alias-bg-layer-1); border-radius: 10px; }
+[data-cp-settings] .cp-palette { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+[data-cp-settings] .cp-swatch { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--dsw-alias-border-l2); }
+[data-cp-settings] .cp-heading { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; }
+[data-cp-settings] .cp-version { color: var(--dsw-alias-label-secondary); font-size: 14px; font-variant-numeric: tabular-nums; }
+[data-cp-settings] .cp-update { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--dsw-alias-border-l1); }
+[data-cp-settings] .cp-versions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 16px; margin: 0 0 16px; }
+[data-cp-settings] .cp-versions dt { color: var(--dsw-alias-label-secondary); }
+[data-cp-settings] .cp-versions dd { margin: 0; text-align: end; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+[data-cp-settings] .cp-update-message { margin: 0 0 16px; overflow-wrap: anywhere; }
+[data-cp-settings] .cp-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+[data-cp-settings] button { padding: 9px 14px; min-height: 40px; border: 1px solid var(--dsw-alias-border-l2); border-radius: 8px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font: inherit; cursor: pointer; }
+[data-cp-settings] button:hover:enabled { background: var(--dsw-alias-interactive-bg-hover); }
+[data-cp-settings] button:disabled { opacity: .55; cursor: default; }
+[data-cp-settings] :is(button, input[type="text"]):focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 3px; }
+[data-cp-settings] .cp-update-form { margin-top: 20px; }
+[data-cp-settings] .cp-update-form label { display: block; margin-bottom: 8px; font-weight: 600; }
+[data-cp-settings] input[type="text"] { display: block; box-sizing: border-box; width: 100%; min-width: 0; padding: 10px 12px; min-height: 44px; border: 1px solid var(--dsw-alias-border-l2); border-radius: 8px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font: inherit; font-size: 16px; caret-color: var(--dsw-alias-brand-primary); }
+[data-cp-settings] input::placeholder { color: var(--dsw-alias-label-secondary); }
+[data-cp-settings] .cp-update-help { margin: 10px 0 16px; font-size: 14px; }
+[data-cp-settings] .cp-install { background: var(--dsw-alias-brand-primary); color: var(--dsw-alias-label-primary-foreground); border-color: transparent; }
+[data-cp-settings] .cp-install:hover:enabled { background: var(--dsw-alias-brand-primary); filter: brightness(.94); }
+[data-cp-settings] .cp-update-error { margin: 0 0 16px; padding: 12px; border-radius: 8px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font-size: 13px; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  html[data-cp-active] [data-conversation-content] { --cp-turn-gap: 24px; }
+  html[data-cp-active] :is([data-chat-flow-kind="user"], [data-chat-flow-kind="steering"]) [class*="_userStack"] { max-width: 94%; }
+  html[data-cp-active] .pXSMma_headline { font-size: 28px; }
+  html[data-cp-active] [data-composer-input] { font-size: max(16px, var(--dsh-content-font-size, 14px)); }
+  [data-cp-settings] { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-cp-active] :is([data-composer-card], [data-chat-flow-kind], button) { transition: none !important; }
+}

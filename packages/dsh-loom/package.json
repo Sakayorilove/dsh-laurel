@@ -1,0 +1,54 @@
+{
+  "name": "dsh-loom",
+  "version": "0.8.6",
+  "private": true,
+  "type": "module",
+  "description": "Loom：DSH 的可视化架构与并行交付工作台。全部自建，零第三方运行时代码。",
+  "license": "MIT",
+  "author": "Clelia",
+  "repository": { "type": "git", "url": "https://github.com/Sakayorilove/dsh-laurel.git", "directory": "packages/dsh-loom" },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json",
+    "./client": "./lib/client.js"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-ui-session"
+      ]
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "docs",
+    "THIRD-PARTY.md",
+    "LICENSE",
+    "交付回传手册.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/check-bundle.mjs",
+    "build:check": "node scripts/check-bundle.mjs --check",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.json && node scripts/run-tests.mjs",
+    "test:installed": "node tests/installed.mjs",
+    "test:client": "node tests/client.mjs",
+    "test:all": "tsc -p tsconfig.json && node scripts/run-tests.mjs --browser"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3"
+  }
+}

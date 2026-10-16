@@ -1,0 +1,613 @@
+{
+  "note": "从真实 DSH 会话日志抽出的 usage **事件骨架**（已去掉会话目录名、会话 id 与本机路径，只保留事件类型、字段名与 token 数的形状）。只读，未修改任何会话。",
+  "extractedAt": "2026-10-14T22:23:25.033Z",
+  "decoder": "multi-frame zstd split by frame magic + zlib.zstdDecompressSync per frame",
+  "logsFound": 94,
+  "logsDecompressed": 1,
+  "decompressFailures": 0,
+  "totalEventsScanned": 107,
+  "usageShapesSeen": [
+    "data.usage"
+  ],
+  "eventTypeCensusTop": [
+    {
+      "type": "tool/call",
+      "count": 22
+    },
+    {
+      "type": "tool/result",
+      "count": 22
+    },
+    {
+      "type": "step/start",
+      "count": 15
+    },
+    {
+      "type": "assistant/message",
+      "count": 15
+    },
+    {
+      "type": "step/end",
+      "count": 14
+    },
+    {
+      "type": "user/message",
+      "count": 6
+    },
+    {
+      "type": "agent/inbox/spliced",
+      "count": 2
+    },
+    {
+      "type": "session",
+      "count": 1
+    },
+    {
+      "type": "subagent/descriptor",
+      "count": 1
+    },
+    {
+      "type": "sandbox/mode",
+      "count": 1
+    },
+    {
+      "type": "approval/policy",
+      "count": 1
+    },
+    {
+      "type": "permission/preset",
+      "count": 1
+    },
+    {
+      "type": "turn/start",
+      "count": 1
+    },
+    {
+      "type": "system/message",
+      "count": 1
+    },
+    {
+      "type": "request/header",
+      "count": 1
+    },
+    {
+      "type": "request/context",
+      "count": 1
+    },
+    {
+      "type": "session/title",
+      "count": 1
+    },
+    {
+      "type": "todo/write",
+      "count": 1
+    }
+  ],
+  "samples": [
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 18,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 7827,
+        "outputTokens": 96,
+        "totalTokens": 22643,
+        "cacheReadTokens": 14720
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 18,
+        "time": 1791989042565,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 1,
+          "usage": {
+            "inputTokens": 7827,
+            "outputTokens": 96,
+            "totalTokens": 22643,
+            "cacheReadTokens": 14720
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 25,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 6080,
+        "outputTokens": 148,
+        "totalTokens": 28756,
+        "cacheReadTokens": 22528
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 25,
+        "time": 1791989046331,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 2,
+          "usage": {
+            "inputTokens": 6080,
+            "outputTokens": 148,
+            "totalTokens": 28756,
+            "cacheReadTokens": 22528
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 32,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 1146,
+        "outputTokens": 267,
+        "totalTokens": 30085,
+        "cacheReadTokens": 28672
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 32,
+        "time": 1791989049797,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 3,
+          "usage": {
+            "inputTokens": 1146,
+            "outputTokens": 267,
+            "totalTokens": 30085,
+            "cacheReadTokens": 28672
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 39,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 1510,
+        "outputTokens": 160,
+        "totalTokens": 31750,
+        "cacheReadTokens": 30080
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 39,
+        "time": 1791989054072,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 4,
+          "usage": {
+            "inputTokens": 1510,
+            "outputTokens": 160,
+            "totalTokens": 31750,
+            "cacheReadTokens": 30080
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 46,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 2342,
+        "outputTokens": 558,
+        "totalTokens": 34644,
+        "cacheReadTokens": 31744
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 46,
+        "time": 1791989059942,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 5,
+          "usage": {
+            "inputTokens": 2342,
+            "outputTokens": 558,
+            "totalTokens": 34644,
+            "cacheReadTokens": 31744
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 53,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 1168,
+        "outputTokens": 634,
+        "totalTokens": 36362,
+        "cacheReadTokens": 34560
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 53,
+        "time": 1791989066328,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 6,
+          "usage": {
+            "inputTokens": 1168,
+            "outputTokens": 634,
+            "totalTokens": 36362,
+            "cacheReadTokens": 34560
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 61,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 223,
+        "outputTokens": 54,
+        "totalTokens": 36629,
+        "cacheReadTokens": 36352
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 61,
+        "time": 1791989069152,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 7,
+          "usage": {
+            "inputTokens": 223,
+            "outputTokens": 54,
+            "totalTokens": 36629,
+            "cacheReadTokens": 36352
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 66,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 9844,
+        "outputTokens": 2077,
+        "totalTokens": 48529,
+        "cacheReadTokens": 36608
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 66,
+        "time": 1791989084769,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 8,
+          "usage": {
+            "inputTokens": 9844,
+            "outputTokens": 2077,
+            "totalTokens": 48529,
+            "cacheReadTokens": 36608
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 71,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 4976,
+        "outputTokens": 453,
+        "totalTokens": 53941,
+        "cacheReadTokens": 48512
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 71,
+        "time": 1791989089722,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 9,
+          "usage": {
+            "inputTokens": 4976,
+            "outputTokens": 453,
+            "totalTokens": 53941,
+            "cacheReadTokens": 48512
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 78,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 850,
+        "outputTokens": 257,
+        "totalTokens": 54995,
+        "cacheReadTokens": 53888
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 78,
+        "time": 1791989096802,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 10,
+          "usage": {
+            "inputTokens": 850,
+            "outputTokens": 257,
+            "totalTokens": 54995,
+            "cacheReadTokens": 53888
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 83,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 154,
+        "outputTokens": 809,
+        "totalTokens": 55875,
+        "cacheReadTokens": 54912
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 83,
+        "time": 1791989103712,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 11,
+          "usage": {
+            "inputTokens": 154,
+            "outputTokens": 809,
+            "totalTokens": 55875,
+            "cacheReadTokens": 54912
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 88,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 259,
+        "outputTokens": 108,
+        "totalTokens": 56047,
+        "cacheReadTokens": 55680
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 88,
+        "time": 1791989106532,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 12,
+          "usage": {
+            "inputTokens": 259,
+            "outputTokens": 108,
+            "totalTokens": 56047,
+            "cacheReadTokens": 55680
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 93,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 431,
+        "outputTokens": 291,
+        "totalTokens": 56658,
+        "cacheReadTokens": 55936
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 93,
+        "time": 1791989110647,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 13,
+          "usage": {
+            "inputTokens": 431,
+            "outputTokens": 291,
+            "totalTokens": 56658,
+            "cacheReadTokens": 55936
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 98,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 274,
+        "outputTokens": 5665,
+        "totalTokens": 62515,
+        "cacheReadTokens": 56576
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 98,
+        "time": 1791989146312,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 14,
+          "usage": {
+            "inputTokens": 274,
+            "outputTokens": 5665,
+            "totalTokens": 62515,
+            "cacheReadTokens": 56576
+          }
+        }
+      }
+    },
+    {
+      "source": "real-session-log",
+      "logFile": "<DSH_HOME>/sessions/<session-dir>/<session-id>/session.v4.jsonl.zstd",
+      "type": "assistant/message",
+      "seq": 105,
+      "where": "data.usage",
+      "usage": {
+        "inputTokens": 2392,
+        "outputTokens": 8459,
+        "totalTokens": 73315,
+        "cacheReadTokens": 62464
+      },
+      "eventSkeleton": {
+        "type": "assistant/message",
+        "seq": 105,
+        "time": 1791989178518,
+        "dataKeys": [
+          "turn",
+          "step",
+          "message",
+          "usage",
+          "stream"
+        ],
+        "data": {
+          "turn": 1,
+          "step": 15,
+          "usage": {
+            "inputTokens": 2392,
+            "outputTokens": 8459,
+            "totalTokens": 73315,
+            "cacheReadTokens": 62464
+          }
+        }
+      }
+    }
+  ]
+}
